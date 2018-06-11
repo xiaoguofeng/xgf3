@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ECharts bar图例</title>
+    <style>
+      #mycanvas{
+          width: 500px;
+          height: 300px;
+
+      }
+
+    </style>
+</head>
+<body>
+    <!-- 如果想使用ECharts bar 作为图形分析就先创建一个绘图区域 -->
+    <div id="mycanvas">
+
+    </div>
+</body>
+<!-- 2.引入ECharts.js文件 -->
+<script src="../echarts.js"></script>
+<script>
+    //3.1获取绘图区域
+    var myCanvas=document.getElementById('mycanvas');
+    //3.2 初始化引入ECharts 对象
+    var myCharts=echarts.init(myCanvas);
+    //3.3 配置 ECharts 图例所需要的数据
+    var option = {
+        //设置标题
+        title:{
+            text:'月考成绩',
+            subtext:'H5全栈1班',
+            
+        },
+        //图例视表
+        legend:{
+             data:['4月','5月','6月','温度'],
+             orient: 'horizontal',
+             inactiveColor: '#00f',
+            //  bottom:'1%'
+             
+        },
+        //控制grid图 网格图的显示位置和样式
+        grid:{
+             left:'3%',
+             right:'5%',
+             bottom:'3%',
+             containLabel:true
+        },
+        //交互提示框
+        tooltip:{
+         trigger:'axis',
+        },
+        //x轴
+        xAxis:{
+            //x轴的度量坐标名称
+            data : ['肖国锋','李孟展','魏帅菩','陈科举','张晓雪'],
+            axisPointer:{
+                // type:'shadow', 阴影
+                // shadowStyle:{
+                // color: {
+                //     type: 'linear',
+                //     x: 0,
+                //     y: 0,
+                //     x2: 0,
+                //     y2: 1,
+                //     colorStops: [{
+                //         offset: 0, color: 'red' // 0% 处的颜色
+                //     }, {
+                //         offset: 1, color: 'blue' // 100% 处的颜色
+                //     }],
+                //     globalCoord: false // 缺省为 false
+                // },
+                // opactiy:0.3
+                // }
+                type:'line',
+                lineStyle:{
+                    type:'botted',
+                    default: 10,
+                }
+            }
+        },
+        //y轴
+        yAxis:[
+            {
+            type :'value',
+            name:'分',
+            min:-20,
+            max:100,
+            interval:40,
+            axisLabel:{
+                formatter:'{value}分'
+            }
+          },
+          {
+            type :'value',
+            name:'温度',
+            min:-20,
+            max:35,
+            interval:5,
+            axisLabel:{
+                formatter:'{value}°C'
+            }
+          }
+
+        ],
+          //配置数据
+          series:[{
+                name : '4月',
+                type : 'bar',
+                barWidth:'20%',
+                color:'green',
+                data : [74.5,67,73,78,82],
+                markPoint:{
+                    data:[
+                        {
+                            type:'max',
+                            name:'最大值'
+                        },
+                        {
+                            type:'min',
+                            name:'最小值'
+                        }
+                    ]
+                },
+                markLine:{
+                      data:[{
+                          type:'average',
+                          name:'平均值'
+                      }]
+                }
+            },
+            {
+                name : '5月',
+                type : 'bar',
+                barWidth:'20%',
+                color:'#000000',
+                data : [60,52.5,51,63,80]
+            },
+            {
+                name : '6月',
+                type : 'bar',
+                barWidth:'20%',
+                color:'#f00',
+                data : [56,77,51,63,90]
+            },
+            {
+                name:'温度',
+                type:'line',
+                color:'green',
+                data : [35,34,33,32,33],
+                yAxisIndex : 1,
+                itemStyle:{normal:{label:{show:true}}}
+            }
+          ]
+       
+    }
+    //4.使用指定的配置数据显示图标
+    myCharts.setOption(option);
+</script>
+</html>
